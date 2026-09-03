@@ -4,7 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.time.OffsetDateTime;
+import java.time.Instant;
 import java.util.UUID;
 
 @Entity
@@ -14,68 +14,70 @@ public class SafetyEvent {
     @Id
     private UUID id;
 
-    @Column(name = "event_id", unique = true, nullable = false, length = 64)
-    private String eventId;
+    @Column(name = "tenant_id", nullable = false, length = 64)
+    private String tenantId;
 
     @Column(name = "user_id", nullable = false, length = 64)
     private String userId;
 
-    @Column(name = "persona_id", nullable = false, length = 64)
-    private String personaId;
-
     @Column(name = "session_id", nullable = false, length = 64)
     private String sessionId;
 
-    @Column(nullable = false, length = 16)
-    private String direction;
+    @Column(name = "category", nullable = false, length = 64)
+    private String category;
 
-    @Column(nullable = false, length = 32)
-    private String reason;
-
-    @Column(nullable = false, length = 16)
+    @Column(name = "severity", nullable = false, length = 64)
     private String severity;
 
-    @Column(nullable = false)
-    private boolean allowed;
+    @Column(name = "action", nullable = false, length = 64)
+    private String action;
 
-    @Column(name = "should_escalate", nullable = false)
-    private boolean shouldEscalate;
-
-    @Column(name = "replacement_message", columnDefinition = "TEXT")
-    private String replacementMessage;
-
-    @Column(name = "policy_version", nullable = false)
-    private int policyVersion;
+    @Column(name = "reason", columnDefinition = "TEXT")
+    private String reason;
 
     @Column(name = "created_at", nullable = false)
-    private OffsetDateTime createdAt = OffsetDateTime.now();
+    private Instant createdAt;
 
-    public SafetyEvent() {
-        this.id = UUID.randomUUID();
+    public SafetyEvent() {}
+
+    public SafetyEvent(UUID id, String tenantId, String userId, String sessionId,
+                       String category, String severity, String action, String reason,
+                       Instant createdAt) {
+        this.id = id;
+        this.tenantId = tenantId;
+        this.userId = userId;
+        this.sessionId = sessionId;
+        this.category = category;
+        this.severity = severity;
+        this.action = action;
+        this.reason = reason;
+        this.createdAt = createdAt;
     }
 
     public UUID getId() { return id; }
-    public String getEventId() { return eventId; }
-    public void setEventId(String eventId) { this.eventId = eventId; }
+    public void setId(UUID id) { this.id = id; }
+
+    public String getTenantId() { return tenantId; }
+    public void setTenantId(String tenantId) { this.tenantId = tenantId; }
+
     public String getUserId() { return userId; }
     public void setUserId(String userId) { this.userId = userId; }
-    public String getPersonaId() { return personaId; }
-    public void setPersonaId(String personaId) { this.personaId = personaId; }
+
     public String getSessionId() { return sessionId; }
     public void setSessionId(String sessionId) { this.sessionId = sessionId; }
-    public String getDirection() { return direction; }
-    public void setDirection(String direction) { this.direction = direction; }
-    public String getReason() { return reason; }
-    public void setReason(String reason) { this.reason = reason; }
+
+    public String getCategory() { return category; }
+    public void setCategory(String category) { this.category = category; }
+
     public String getSeverity() { return severity; }
     public void setSeverity(String severity) { this.severity = severity; }
-    public boolean isAllowed() { return allowed; }
-    public void setAllowed(boolean allowed) { this.allowed = allowed; }
-    public boolean isShouldEscalate() { return shouldEscalate; }
-    public void setShouldEscalate(boolean shouldEscalate) { this.shouldEscalate = shouldEscalate; }
-    public String getReplacementMessage() { return replacementMessage; }
-    public void setReplacementMessage(String replacementMessage) { this.replacementMessage = replacementMessage; }
-    public int getPolicyVersion() { return policyVersion; }
-    public void setPolicyVersion(int policyVersion) { this.policyVersion = policyVersion; }
-    public OffsetDateTime getCreatedAt() { return createdAt; }
+
+    public String getAction() { return action; }
+    public void setAction(String action) { this.action = action; }
+
+    public String getReason() { return reason; }
+    public void setReason(String reason) { this.reason = reason; }
+
+    public Instant getCreatedAt() { return createdAt; }
+    public void setCreatedAt(Instant createdAt) { this.createdAt = createdAt; }
 }

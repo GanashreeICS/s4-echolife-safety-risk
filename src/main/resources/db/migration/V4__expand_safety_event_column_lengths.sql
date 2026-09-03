@@ -1,0 +1,6 @@
+ALTER TABLE safety_events ALTER COLUMN action TYPE VARCHAR(64);
+ALTER TABLE safety_events ALTER COLUMN severity TYPE VARCHAR(64);
+ALTER TABLE safety_events ALTER COLUMN category TYPE VARCHAR(64);
+ALTER TABLE safety_events ALTER COLUMN tenant_id TYPE VARCHAR(64);
+ALTER TABLE safety_events ALTER COLUMN user_id TYPE VARCHAR(64);
+ALTER TABLE safety_events ALTER COLUMN session_id TYPE VARCHAR(64);
