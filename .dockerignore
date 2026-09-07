@@ -1,8 +1,7 @@
-target/
-.git/
-.idea/
+.git
+.gitignore
+.idea
 *.iml
-.mvn/
-mvnw
-mvnw.cmd
+target
+.DS_Store
 *.log

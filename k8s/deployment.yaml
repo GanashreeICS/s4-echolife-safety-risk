@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: safety-risk-deployment
+  namespace: default
+  labels:
+    app: safety-risk-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: safety-risk-service
+  template:
+    metadata:
+      labels:
+        app: safety-risk-service
+    spec:
+      containers:
+        - name: safety-risk-service
+          image: s4-echolife-safety-risk:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8082
+              name: http
+          envFrom:
+            - configMapRef:
+                name: safety-risk-config
+            - secretRef:
+                name: safety-risk-secret
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1024Mi"
+              cpu: "1000m"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8082
+            initialDelaySeconds: 40
+            periodSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8082
+            initialDelaySeconds: 30
+            periodSeconds: 10
