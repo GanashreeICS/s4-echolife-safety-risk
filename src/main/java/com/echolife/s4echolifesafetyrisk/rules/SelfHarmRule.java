@@ -8,12 +8,26 @@ import java.util.Optional;
 public class SelfHarmRule implements SafetyRule {
 
     private static final List<String> TRIGGERS = List.of(
-            "kill myself", "suicide", "end my life", "want to die", "harm myself", "cutting myself"
+            "kill myself",
+            "suicide",
+            "end my life",
+            "want to die",
+            "harm myself",
+            "hurt myself",
+            "cutting myself",
+            "cut myself",
+            "bleed out",
+            "hang myself",
+            "overdose",
+            "take my own life"
     );
 
     @Override
     public Optional<RuleViolation> evaluate(String content) {
-        if (content == null || content.isBlank()) return Optional.empty();
+        if (content == null || content.isBlank()) {
+            return Optional.empty();
+        }
+
         String normalized = content.toLowerCase();
         for (String trigger : TRIGGERS) {
             if (normalized.contains(trigger)) {
@@ -25,6 +39,7 @@ public class SelfHarmRule implements SafetyRule {
                 ));
             }
         }
+
         return Optional.empty();
     }
 }

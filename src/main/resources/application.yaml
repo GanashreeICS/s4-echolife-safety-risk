@@ -16,12 +16,32 @@ spring:
   flyway:
     enabled: true
     baseline-on-migrate: true
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      acks: all
+
+app:
+  kafka:
+    safety-events-topic: safety-risk-events
+    safety-events-dlq-topic: safety-risk-events.DLQ
 
 management:
   endpoints:
     web:
       exposure:
         include: health,info,metrics,prometheus
+  endpoint:
+    prometheus:
+      enabled: true
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
   tracing:
     sampling:
       probability: 1.0
