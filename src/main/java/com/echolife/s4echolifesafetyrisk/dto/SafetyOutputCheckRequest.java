@@ -3,9 +3,14 @@ package com.echolife.s4echolifesafetyrisk.dto;
 import jakarta.validation.constraints.NotBlank;
 
 public record SafetyOutputCheckRequest(
-        @NotBlank String tenantId,
-        @NotBlank String userId,
-        @NotBlank String sessionId,
-        @NotBlank String generatedContent,
-        String originalPrompt
+        @NotBlank(message = "tenantId is required")
+        String tenantId,
+
+        @NotBlank(message = "userId is required")
+        String userId,
+
+        String sessionId,
+
+        @NotBlank(message = "generatedContent is required")
+        String generatedContent
 ) {}
